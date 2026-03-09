@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reloj y Fecha en Español</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        color: white;
+        background-color: #050712;
+      }
+      #clock{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        height: 100%;
+      }
+      #clock .clock__horas {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+      #date {
+        font-size: 1rem;
+      }
+      .clock__segundos {
+        padding-left: .5rem;
+        font-size: 1.2rem;
+        color: #55586B;
+      }
+
+      .clock__span{
+        font-size: 2.5rem;
+        margin-top: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="clock">
+      <h2 class="clock__horas" id="hora">00</h2>
+      <span class="clock__span">:</span>
+      <h2 class="clock__horas" id="minutos">00</h2>
+     
+      <h2 class="clock__segundos" id="segundos">00</h2>
+    </div>
+    <div id="date">Lunes, 1 de enero de 1970</div>
+
+    <script>
+      const days = [
+        "domingo",
+        "lunes",
+        "martes",
+        "miércoles",
+        "jueves",
+        "viernes",
+        "sábado",
+      ];
+      const months = [
+        "enero",
+        "febrero",
+        "marzo",
+        "abril",
+        "mayo",
+        "junio",
+        "julio",
+        "agosto",
+        "septiembre",
+        "octubre",
+        "noviembre",
+        "diciembre",
+      ];
+
+      const hora = document.getElementById("hora");
+      const minutos = document.getElementById("minutos");
+      const segundos = document.getElementById("segundos");
+
+      function updateClock() {
+        const now = new Date();
+
+        // hora 24h con ceros a la izquierda
+        const h = String(now.getHours()).padStart(2, "0");
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const s = String(now.getSeconds()).padStart(2, "0");
+        hora.textContent = h;
+        minutos.textContent = m;
+        segundos.textContent = s;
+
+        // fecha en español
+        const dayName = days[now.getDay()];
+        const dayNum = now.getDate();
+        const monthName = months[now.getMonth()];
+        const year = now.getFullYear();
+        document.getElementById("date").textContent =
+          `${capitalize(dayName)}, ${dayNum} de ${monthName} de ${year}`;
+      }
+
+      function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+
+      // iniciar y actualizar cada segundo
+      updateClock();
+      setInterval(updateClock, 1000);
+    </script>
+  </body>
+</html>
